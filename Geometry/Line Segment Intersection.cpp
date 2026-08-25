@@ -1,0 +1,108 @@
+#include <bits/stdc++.h>
+#include <array>
+
+using namespace std;
+
+#define int long long
+#define endl "\n"
+#define ar array
+#define all(x) x.begin(),x.end()
+
+const int INF = 1e17 , MOD = 998244353LL;
+
+int mul(int a,int b,int mod = MOD)
+{
+    a %= mod;
+    b %= mod;
+    return a * 1LL * b % mod;
+}
+int sum(int a,int b,int mod = MOD)
+{
+    a %= mod;
+    b %= mod;
+    return (a + b + mod) % mod;
+}
+int binpow(int base,int power,int mod = MOD)
+{
+    if(power == 1) return base;
+    if(power == 0) return 1;
+    
+    if(power % 2 == 1)
+    {
+         int a;    
+         a = binpow(base,(power - 1)/2);
+        return mul(base, mul(a, a, mod), mod);
+    } 
+    else
+    {
+        int a;
+        a = binpow(base,power/2);
+        return mul(a, a, mod);
+    } 
+
+}
+int inv(int a,int mod = MOD)
+{
+    a %= mod;
+    return binpow(a, mod - 2) % mod;
+}
+struct point
+{
+	int x,y;
+	point(int _x,int _y)
+	{
+		x = _x, y = _y;
+	}
+};
+int cross(point a,point b)
+{
+	return a.x * b.y - a.y * b.x;
+}
+point minus1(point a,point b)
+{
+	point res(a.x - b.x, a.y - b.y);
+	return res;
+}
+point plus(point a,point b)
+{
+	point res(a.x + b.x, a.y + b.y);
+	return res;
+}
+void solve()
+{
+    vector<point> a;
+    for(int i = 0;4 > i;i++)
+    {
+    	int x,y;
+    	cin >> x >> y;
+    	point new_point(x, y);
+    	a.push_back(new_point);
+    }
+    int res1 = cross(minus1(a[0], a[2]), minus1(a[1], a[2]));
+    int res2 = cross(minus1(a[0], a[3]), minus1(a[1], a[3]));
+    int res3 = cross(minus1(a[2], a[0]), minus1(a[3], a[0]));
+    int res4 = cross(minus1(a[2], a[1]), minus1(a[3], a[1]));
+    if(((max(a[0].x, a[1].x)) < (min(a[2].x, a[3].x))) || ((min(a[0].x, a[1].x)) > (max(a[2].x, a[3].x))))
+    {
+        cout << "NO" << endl;
+        return;
+    }
+    if(((max(a[0].y, a[1].y)) < (min(a[2].y, a[3].y))) || ((min(a[0].y, a[1].y)) > (max(a[2].y, a[3].y))))
+    {
+        cout << "NO" << endl;
+        return;
+    }
+    if((res1 == 0 || res2 == 0 || (res1 > 0) != (res2 > 0)) && (res3 == 0 || res4 == 0 || (res3 > 0) != (res4 > 0))) cout << "YES" << endl;
+    else cout << "NO" << endl;
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int tt;
+    tt=1; 
+    cin >> tt;
+    while(tt--) solve();
+
+}

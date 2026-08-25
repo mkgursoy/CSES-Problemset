@@ -1,0 +1,110 @@
+#include <bits/stdc++.h>
+#include <array>
+
+using namespace std;
+
+#define int long long
+#define endl "\n"
+#define ar array
+#define all(x) x.begin(),x.end()
+
+const int INF = 1e17 , MOD = 998244353LL;
+
+int mul(int a,int b,int mod = MOD)
+{
+    a %= mod;
+    b %= mod;
+    return a * 1LL * b % mod;
+}
+int sum(int a,int b,int mod = MOD)
+{
+    a %= mod;
+    b %= mod;
+    return (a + b + mod) % mod;
+}
+int binpow(int base,int power,int mod = MOD)
+{
+    if(power == 1) return base;
+    if(power == 0) return 1;
+    
+    if(power % 2 == 1)
+    {
+         int a;    
+         a = binpow(base,(power - 1)/2);
+        return mul(base, mul(a, a, mod), mod);
+    } 
+    else
+    {
+        int a;
+        a = binpow(base,power/2);
+        return mul(a, a, mod);
+    } 
+
+}
+int inv(int a,int mod = MOD)
+{
+    a %= mod;
+    return binpow(a, mod - 2) % mod;
+}
+struct point
+{
+	int x,y;
+	point(int _x,int _y)
+	{
+		x = _x, y = _y;
+	}
+};
+int cross(point a,point b)
+{
+	return a.x * b.y - a.y * b.x;
+}
+point minus1(point a,point b)
+{
+	point res(a.x - b.x, a.y - b.y);
+	return res;
+}
+point plus(point a,point b)
+{
+	point res(a.x + b.x, a.y + b.y);
+	return res;
+}
+void solve()
+{
+    int n,q;
+    cin >> n;
+    vector<point> a;
+    for(int i = 0;n > i;i++)
+    {
+    	int x,y;
+    	cin >> x >> y;
+    	point new_point(x, y);
+    	a.push_back(new_point);
+    }
+    a.push_back(a[0]);
+    int ans = 0;
+    int boundary = 0;
+    for(int i = 1;n >= i;i++) ans += cross(a[i], a[i - 1]);
+    for(int i = 1;n >= i;i++)
+    {
+    	if(a[i].x == a[i - 1].x) boundary += abs(a[i].y - a[i - 1].y);
+    	else if(a[i].y == a[i - 1].y) boundary += abs(a[i].x - a[i - 1].x);
+    	else
+    	{
+    		int g = gcd(abs(a[i].y - a[i - 1].y), abs(a[i].x - a[i - 1].x));
+    		boundary += g;
+    	}
+    	
+    }
+    cout << (abs(ans) - boundary + 2) / 2 << " " << boundary << endl;
+}
+int32_t main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int tt;
+    tt=1; 
+   
+    while(tt--) solve();
+
+}
