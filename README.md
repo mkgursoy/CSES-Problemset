@@ -1,6 +1,6 @@
 # CSES Problem Set Solutions
 
-My C++ and Python (None Right Now) solutions to the problems from [CSES](cses.fi/problemset/). Currently I have 286/400 solved.
+My C++ and Python (None Right Now) solutions to the problems from [CSES](https://cses.fi/problemset/). Currently I have 286/400 solved.
 
 # Intended Usage
 
